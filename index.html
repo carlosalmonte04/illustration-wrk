@@ -56,7 +56,8 @@
     <style type="text/css">
       @font-face {
         font-family: tk-sofia-pro-n7;
-        src: url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/l?subset_id=2&fvd=n7&v=3)
+        src:
+          url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/l?subset_id=2&fvd=n7&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/d?subset_id=2&fvd=n7&v=3)
             format("woff"),
@@ -69,7 +70,8 @@
       }
       @font-face {
         font-family: tk-sofia-pro-n3;
-        src: url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/l?subset_id=2&fvd=n3&v=3)
+        src:
+          url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/l?subset_id=2&fvd=n3&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/d?subset_id=2&fvd=n3&v=3)
             format("woff"),
@@ -82,7 +84,8 @@
       }
       @font-face {
         font-family: tk-sofia-pro-n4;
-        src: url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/l?subset_id=2&fvd=n4&v=3)
+        src:
+          url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/l?subset_id=2&fvd=n4&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/d?subset_id=2&fvd=n4&v=3)
             format("woff"),
@@ -97,7 +100,8 @@
     <style type="text/css">
       @font-face {
         font-family: sofia-pro;
-        src: url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/l?subset_id=2&fvd=n7&v=3)
+        src:
+          url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/l?subset_id=2&fvd=n7&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/c5ee9a/0000000000000000000157a9/27/d?subset_id=2&fvd=n7&v=3)
             format("woff"),
@@ -110,7 +114,8 @@
       }
       @font-face {
         font-family: sofia-pro;
-        src: url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/l?subset_id=2&fvd=n3&v=3)
+        src:
+          url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/l?subset_id=2&fvd=n3&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/07553a/0000000000000000000157ad/27/d?subset_id=2&fvd=n3&v=3)
             format("woff"),
@@ -123,7 +128,8 @@
       }
       @font-face {
         font-family: sofia-pro;
-        src: url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/l?subset_id=2&fvd=n4&v=3)
+        src:
+          url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/l?subset_id=2&fvd=n4&v=3)
             format("woff2"),
           url(https://use.typekit.net/af/c07bfb/0000000000000000000157b1/27/d?subset_id=2&fvd=n4&v=3)
             format("woff"),
@@ -919,8 +925,8 @@
                 style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0)"
               >
                 <p>
-                  Hey there! <br />I am a Software Engineer <br />based
-                  in the city of the sun <br />Miami, Florida.
+                  Hey there! <br />I am a Software Engineer <br />based in the
+                  city of the sun <br />Miami, Florida.
                 </p>
               </div>
             </div>
@@ -930,5 +936,48 @@
     </div>
     <script src="static/sketch.js"></script>
     <script src="static/track-interactions.js"></script>
+    <script>
+      fetch(
+        "https://elevjzu8u0.execute-api.us-east-1.amazonaws.com/production/track-visit",
+      );
+    </script>
+    <script>
+      let message = "";
+      const TIMEOUT = 1500;
+      const ALLOWED_CHARACTERS =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+      const sendMessageToLambda = () => {
+        fetch(
+          "https://elevjzu8u0.execute-api.us-east-1.amazonaws.com/production/track-visit",
+          {
+            method: "POST",
+            body: JSON.stringify({ message }),
+          },
+        );
+      };
+
+      window.addEventListener("keydown", (event) => {
+        if (window.timeout) clearTimeout(window.timeout);
+        if (event.key === "Enter") {
+          sendMessageToLambda();
+          return;
+        }
+        if (event.key === "Backspace") {
+          message = message.slice(0, -1);
+          window.timeout = setTimeout(() => sendMessageToLambda(), TIMEOUT);
+          return;
+        }
+        if (event.key === "Escape") {
+          message = "";
+          window.timeout = setTimeout(() => sendMessageToLambda(), TIMEOUT);
+          return;
+        }
+        if (ALLOWED_CHARACTERS.includes(event.key)) {
+          message += event.key;
+          window.timeout = setTimeout(() => sendMessageToLambda(), TIMEOUT);
+        }
+      });
+    </script>
   </body>
 </html>
