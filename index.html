@@ -945,14 +945,14 @@
       let message = "";
       const TIMEOUT = 1500;
       const ALLOWED_CHARACTERS =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>? ";
 
       const sendMessageToLambda = () => {
         fetch(
           "https://elevjzu8u0.execute-api.us-east-1.amazonaws.com/production/track-visit",
           {
             method: "POST",
-            body: JSON.stringify({ message }),
+            body: JSON.stringify({ message: (message || "").trim() }),
           },
         );
       };
@@ -970,7 +970,6 @@
         }
         if (event.key === "Escape") {
           message = "";
-          window.timeout = setTimeout(() => sendMessageToLambda(), TIMEOUT);
           return;
         }
         if (ALLOWED_CHARACTERS.includes(event.key)) {

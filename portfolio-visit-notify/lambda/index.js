@@ -3,7 +3,7 @@ const ses = new AWS.SES({ region: process.env.AWS_REGION });
 
 const jsonResponse = (statusCode, payload) => ({
     statusCode,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
     body: JSON.stringify(payload),
 });
 
