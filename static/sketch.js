@@ -17,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-  background(168, 208, 230);
+  background(150, 208, 230);
   fill('#FC7A5B');
 
   // stroke('#8A97FF');
