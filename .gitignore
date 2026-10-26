@@ -3,3 +3,4 @@ node_modules/
 .terraform.lock.hcl
 lambda.zip
 .DS_Store
+portfolio-visit-notify/node_modules/
